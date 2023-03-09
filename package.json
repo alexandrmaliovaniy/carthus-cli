@@ -6,6 +6,13 @@
     "build": "rollup -c",
     "start": "node ./dist/cjs/index"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandrmaliovaniy/maverick-cli.git"
+  },
   "author": "Alexandr Maliovaniy",
   "license": "ISC",
   "dependencies": {
