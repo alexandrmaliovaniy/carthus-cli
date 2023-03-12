@@ -4,6 +4,8 @@ import OverrideInjection from "../Structures/OverrideInjection";
 import Path from "../Structures/Path";
 import * as path from "path";
 import * as handlebars from 'handlebars';
+import config from "../Structures/Config";
+import {ISchemaJSONData} from "../types";
 var helpers = require('handlebars-helpers')({
     handlebars: {
         registerHelper(group) {
@@ -86,9 +88,12 @@ class CreateExecutor {
     constructor(cli: CLI) {
         // console.log("Create component with tag " + cli.cmd);
         this._cli = cli;
+        const barePath = cli.props[1];
+        const resolvedPath = cli.path.resolveAlias(barePath);
+        const resultPath = cli.hasFlag('f') && path.join(resolvedPath, cli.props[0]) || resolvedPath;
         this._initialInjection = new DependencyInjection(this, {
             alias: cli.cmd,
-            path: cli.hasFlag('f') && path.join(cli.props[1], cli.props[0]) || cli.props[1]
+            path: resultPath
         })
         this.UnwrapFileDependencyTree(this._initialInjection);
         this.Compile();
@@ -103,6 +108,21 @@ class CreateExecutor {
             this.UnwrapFileDependencyTree(new DependencyInjection(this, dependency, dependencyInjection));
         });
     }
+
+    functionSchemaProps(schema: ISchemaJSONData) {
+        const func = {
+            LoadTemplate: (...args: any) => {
+                return this.config.LoadTemplate(...args)
+            },
+            hasFlag: (...args: any) => {
+                const hardcodeFlag = Object.keys(this.cli.config.flags).filter(alias => this._initialInjection.schema.alias.includes(alias));
+                console.log(hardcodeFlag)
+                return this.cli.hasFlag(...args);
+            }
+        }
+        return [func];
+    }
+
     async Compile() {
         await this.CompileDependencies();
         await this.CompileOverrides();

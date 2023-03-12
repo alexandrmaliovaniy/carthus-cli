@@ -1,6 +1,6 @@
 {
-  "name": "@maverick/cli",
-  "version": "1.0.0",
+  "name": "@carthus/cli",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "build": "rollup -c",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexandrmaliovaniy/maverick-cli.git"
+    "url": "git+https://github.com/alexandrmaliovaniy/carthus-cli.git"
   },
   "author": "Alexandr Maliovaniy",
   "license": "ISC",
@@ -32,7 +32,7 @@
     "typescript": "^4.8.4"
   },
   "bin": {
-    "mvk": "dist/cjs/index.js"
+    "cts": "dist/cjs/index.js"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/cjs/index.js",

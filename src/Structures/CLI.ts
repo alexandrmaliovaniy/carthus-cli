@@ -1,9 +1,10 @@
-import {IArgv} from "../types";
+import {IArgv, ISchemaJSONData, TSchemaProvider} from "../types";
 import ListExecutor from "../Executors/ListExecutor";
 import CreateExecutor from "../Executors/CreateExecutor";
 import FileSearch from "./FileSearch";
 import Path from "./Path";
 import Config from "./Config";
+import Schema from "./Schema";
 
 class CLI {
 
@@ -24,7 +25,6 @@ class CLI {
 
         const props: IArgv['props'] = [];
         const flags: IArgv['flags'] = {};
-
         while (args.length > 0) {
             const param = args.shift();
             if (!param) continue;
@@ -61,11 +61,12 @@ class CLI {
         return this._argv.flags;
     }
 
-    get functionSchemaProps() {
+    functionSchemaProps() {
         const func = {
             LoadTemplate: (...args: any) => {
                 return this.config.LoadTemplate(...args)
             },
+            Override: (...args: any) => this.config.Override(...args),
             hasFlag: (...args: any) => this.hasFlag(...args)
         }
         return [func];
@@ -84,6 +85,10 @@ class CLI {
         this._argv = argv || CLI.Argv;
         this._path = new Path(this);
         this._config = new Config(this);
+
+        const originalPaths = module.paths;
+        const additionalPath = this._path.NODE_MODULES_PATH;
+        module.paths = [additionalPath, ...originalPaths];
         Config.LoadCustomConfig(this.path.CONFIG_PATH)(this.config);
     }
 

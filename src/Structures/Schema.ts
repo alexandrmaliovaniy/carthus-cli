@@ -10,7 +10,7 @@ class Schema {
     dependencies: ISchemaDependency[];
     overrides: ISchemaOverride[];
     constructor(cli: CLI, schemaProvider: TSchemaProvider) {
-        if (typeof schemaProvider === 'function') schemaProvider = schemaProvider(...cli.functionSchemaProps);
+        if (typeof schemaProvider === 'function') schemaProvider = schemaProvider(...cli.functionSchemaProps())
         if (!schemaProvider.alias) throw "Error occurred while parsing extensions. Schema alias not provided!";
         // if (!schemaProvider.filename) throw "Error occurred while parsing extensions. Schema filename not provided!";
 
