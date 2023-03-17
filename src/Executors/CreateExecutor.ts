@@ -97,6 +97,7 @@ class CreateExecutor {
         })
         this.UnwrapFileDependencyTree(this._initialInjection);
         this.Compile();
+        console.log('file:///' + this._initialInjection.absoluteFilePath + ":0\n")
     }
 
     UnwrapFileDependencyTree(dependencyInjection: DependencyInjection) {
