@@ -97,12 +97,12 @@ class CreateExecutor {
         })
         this.UnwrapFileDependencyTree(this._initialInjection);
         this.Compile();
-        const [name, path, ...props] = this.cli.props;
+        const [name, _path, ...props] = this.cli.props;
         const compiledPath = handlebars.compile(this._initialInjection.absoluteFilePath)({
             ARGS: {
                 ALIAS: this.cli.cmd,
                 NAME: name,
-                PATH: path,
+                PATH: _path,
                 PROPS: props,
             },
         });
