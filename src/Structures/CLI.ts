@@ -90,7 +90,7 @@ class CLI {
         const originalPaths = module.paths;
         const additionalPath = this._path.NODE_MODULES_PATH;
         module.paths = [additionalPath, ...originalPaths];
-        Config.LoadCustomConfig(this.path.CONFIG_PATH)(this.config);
+        this.cmd !== 'init' && Config.LoadCustomConfig(this.path.CONFIG_PATH)(this.config);
     }
 
     /**
