@@ -31,9 +31,8 @@ class Schema {
     }
 
     get info() {
-        return [`Alias: [${this.alias.join(", ")}]`,
+        return [`Alias: ${this.alias.join(", ")}`,
         `Description: ${this.description}`,
-        `Result file: ${this.filename}${this.template.fileExtension}`,
         `Dependencies: [${this.dependencies.map(dep => dep.alias).join(", ")}]`].join("\n");
     }
 

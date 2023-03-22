@@ -5,6 +5,7 @@ import FileSearch from "./FileSearch";
 import Path from "./Path";
 import Config from "./Config";
 import Schema from "./Schema";
+import InitExecutor from "../Executors/InitExecutor";
 
 class CLI {
 
@@ -97,6 +98,7 @@ class CLI {
      */
     Start() {
         if (this.cmd === "list") return new ListExecutor(this);
+        if (this.cmd === "init") return new InitExecutor(this);
         new CreateExecutor(this);
     }
 

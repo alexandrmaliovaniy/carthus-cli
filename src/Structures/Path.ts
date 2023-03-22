@@ -49,9 +49,13 @@ class Path {
         const ConfigLocation = FileSearch.Up(process.cwd(), ({name}) => {
             return /carthus\.config/.test(name)
         });
-        if (ConfigLocation.length !== 1) throw "Failed to find project path";
-        this._configPath = path.join(ConfigLocation[0].path, ConfigLocation[0].name)
-        this._projectPath = ConfigLocation[0].path;
+        const PackJsonLocation = FileSearch.Up(process.cwd(), ({name}) => {
+            return /package\.json/.test(name)
+        });
+        const rootFolder = ConfigLocation.length > 0 && ConfigLocation[0].path || PackJsonLocation.length > 0 && PackJsonLocation[0].path || process.cwd();
+        if (this._cli.cmd !== 'init' && ConfigLocation.length !== 1) throw "Failed to find project path";
+        this._configPath = ConfigLocation.length > 0 && path.join(ConfigLocation[0].path, ConfigLocation[0].name) || "";
+        this._projectPath = rootFolder;
     }
 };
 
