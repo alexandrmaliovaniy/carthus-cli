@@ -1,4 +1,3 @@
-import {COMPONENT_TYPES, RESERVED_COMPONENT_NAMES} from "./const/Reserved";
 import Schema from "./Structures/Schema";
 import DependencyInjection from "./Structures/DependencyInjection";
 import OverrideInjection from "./Structures/OverrideInjection";

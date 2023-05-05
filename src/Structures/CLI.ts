@@ -63,9 +63,18 @@ class CLI {
     }
 
     functionSchemaProps() {
+        const { cmd, props, flags } = this._argv;
+        const [NAME, PATH, ...restProps] = props;
         const func = {
             LoadTemplate: (...args: any) => {
                 return this.config.LoadTemplate(...args)
+            },
+            ARGS: {
+                ALIAS: cmd,
+                NAME: NAME,
+                PATH: PATH,
+                PROPS: restProps,
+                FLAGS: flags
             },
             Override: (...args: any) => this.config.Override(...args),
             hasFlag: (...args: any) => this.hasFlag(...args)
